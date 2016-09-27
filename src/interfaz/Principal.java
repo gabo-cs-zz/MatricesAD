@@ -5,6 +5,9 @@
  */
 package interfaz;
 
+import clases.Helper;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,6 +21,10 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
+        JButton botonesH[] = {cmdCrear, cmdLimpiar};
+        JButton botonesD[] = {cmdLlenadoManual, cmdLlenadoAuto, cmdOperacion};
+        Helper.habilitarBotones(botonesH);
+        Helper.deshabilitarBotones(botonesD);
     }
 
     /**
@@ -96,6 +103,11 @@ public class Principal extends javax.swing.JFrame {
 
         cmdLlenadoManual.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cmdLlenadoManual.setText("Manual");
+        cmdLlenadoManual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdLlenadoManualActionPerformed(evt);
+            }
+        });
         jPanel4.add(cmdLlenadoManual, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, -1, 30));
 
         cmdLlenadoAuto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -185,6 +197,10 @@ public class Principal extends javax.swing.JFrame {
         tm.setRowCount(nf);
         tm2.setColumnCount(nc);
         tm2.setRowCount(nf);
+        JButton botonesH[] = {cmdLlenadoManual, cmdLlenadoAuto, cmdLimpiar};
+        JButton botonesD[] = {cmdCrear, cmdOperacion};
+        Helper.habilitarBotones(botonesH);
+        Helper.deshabilitarBotones(botonesD);
     }//GEN-LAST:event_cmdCrearActionPerformed
 
     private void cmdLlenadoAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLlenadoAutoActionPerformed
@@ -198,84 +214,56 @@ public class Principal extends javax.swing.JFrame {
                 tblTablaInicial.setValueAt(n, i, j);
             }
         }
+        JButton botonesH[] = {cmdOperacion, cmdLimpiar};
+        JButton botonesD[] = {cmdCrear, cmdLlenadoManual, cmdLlenadoAuto};
+        Helper.habilitarBotones(botonesH);
+        Helper.deshabilitarBotones(botonesD);
 
     }//GEN-LAST:event_cmdLlenadoAutoActionPerformed
 
     private void cmdOperacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdOperacionActionPerformed
         // TODO add your handling code here:
-        int nf, nc, op, aux, cont = 0;
-        nf = tblTablaInicial.getRowCount();
-        nc = tblTablaInicial.getColumnCount();
+        int  op,cantPares;
         op = cmbOperacion.getSelectedIndex();
+        Helper.limpiadoTabla(tblTablaResultado);
         switch (op) {
             case 0:
-                for (int i = 0; i < nf; i++) {
-                    for (int j = 0; j < nc; j++) {
-                        aux = (int)tblTablaInicial.getValueAt(i, j);
-                        if (aux % 2 == 0) {
-                            cont++;
-                        }
-                    }
-                }
-                txtResultado.setText("Hay " +cont+ " números pares.");
+                cantPares = Helper.cantidadPares(tblTablaInicial);
+                txtResultado.setText("Hay " + cantPares + " números pares.");
                 break;
             case 1:
-                for (int i = 0; i < nf; i++) {
-                    for (int j = 0; j < nc; j++) {
-                        aux = (int)tblTablaInicial.getValueAt(i, j);
-                        if (aux % 2 == 0) {
-                            tblTablaResultado.setValueAt(aux, i, j);
-                        }
-                    }
-                }
+                Helper.pares(tblTablaInicial, tblTablaResultado);
                 break;
             case 2:
-                for (int i = 0; i < nf; i++) {
-                    for (int j = 0; j < nc; j++) {
-                        aux = (int)tblTablaInicial.getValueAt(i, j);
-                        if (i == 0 || j == 0 || i == nf-1) {
-                            tblTablaResultado.setValueAt(aux, i, j);
-                        }
-                    }
-                }
+                Helper.letraC(tblTablaInicial, tblTablaResultado);
                 break;
             case 3:
-                for (int i = 0; i < nf; i++) {
-                    for (int j = 0; j < nc; j++) {
-                        aux = (int)tblTablaInicial.getValueAt(i, j);
-                        if (i == j) {
-                            tblTablaResultado.setValueAt(aux, i, j);
-                        }
-                    }
-                }
+                Helper.diagonalPrincipal(tblTablaInicial, tblTablaResultado);
                 break;
             case 4:
-                for (int i = 0; i < nf; i++) {
-                    for (int j = 0; j < nc; j++) {
-                        aux = (int)tblTablaInicial.getValueAt(i, j);
-                        if (j == 0 || j == (nc-1) || i == (nf/2)) {
-                            tblTablaResultado.setValueAt(aux, i, j);
-                        }
-                    }
-                }
+                Helper.letraH(tblTablaInicial, tblTablaResultado);
                 break;
         }
+        JButton botonesH[] = {cmdOperacion, cmdLimpiar};
+        JButton botonesD[] = {cmdCrear, cmdLlenadoManual, cmdLlenadoAuto};
+        Helper.habilitarBotones(botonesH);
+        Helper.deshabilitarBotones(botonesD);
+        
     }//GEN-LAST:event_cmdOperacionActionPerformed
 
     private void cmdLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLimpiarActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel tm, tm2;
-        tm = (DefaultTableModel) tblTablaInicial.getModel();
-        tm2 = (DefaultTableModel) tblTablaResultado.getModel();
-        tm.setColumnCount(0);
-        tm.setRowCount(0);
-        tm2.setColumnCount(0);
-        tm2.setRowCount(0);
+        Helper.porDefectoTabla(tblTablaInicial);
+        Helper.porDefectoTabla(tblTablaResultado);
         txtNumeroFilas.setText("");
         txtNumeroColumnas.setText("");
         txtNumeroFilas.requestFocusInWindow();
         cmbOperacion.setSelectedIndex(0);
         txtResultado.setText("");
+        JButton botonesH[] = {cmdCrear, cmdLimpiar};
+        JButton botonesD[] = {cmdLlenadoManual, cmdLlenadoAuto, cmdOperacion};
+        Helper.habilitarBotones(botonesH);
+        Helper.deshabilitarBotones(botonesD);
 
 
     }//GEN-LAST:event_cmdLimpiarActionPerformed
@@ -283,6 +271,45 @@ public class Principal extends javax.swing.JFrame {
     private void cmbOperacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbOperacionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbOperacionActionPerformed
+
+    private void cmdLlenadoManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLlenadoManualActionPerformed
+        // TODO add your handling code here:
+        int nf, nc, n, sw, res;
+        boolean aux = true;
+        nf = tblTablaInicial.getRowCount();
+        nc = tblTablaInicial.getColumnCount();
+        for (int i = 0; i < nf; i++) {
+            for (int j = 0; j < nc; j++) {
+                do {
+                    sw = 1;
+                    try {
+                        n = Integer.parseInt(JOptionPane.showInputDialog(this, "Digite el elemento en la posición ["+i+"]" + "["+j+"]").trim());
+                        tblTablaInicial.setValueAt(n, i, j);
+                    } catch (NumberFormatException e) {
+                        Helper.mensaje(this, "Digite un número válido", 3);
+                        sw = 0;
+                    } catch (NullPointerException e) {
+                        res = JOptionPane.showConfirmDialog(this, "¿Estás seguro que desea salir?", "Salir", JOptionPane.YES_NO_OPTION);
+                        if (res == 0) {
+                            sw = 1;
+                            i = nf;
+                            j = nc;
+                            aux = false;
+                            Helper.porDefectoTabla(tblTablaInicial);
+                            Helper.porDefectoTabla(tblTablaResultado);
+                        }
+                        else {
+                            sw = 0;
+                        }
+                    }
+                } while (sw == 0);
+            }
+        }
+        JButton botonesH[] = {cmdOperacion, cmdLimpiar};
+        JButton botonesD[] = {cmdCrear, cmdLlenadoManual, cmdLlenadoAuto};
+        Helper.habilitarBotones(botonesH);
+        Helper.deshabilitarBotones(botonesD);
+    }//GEN-LAST:event_cmdLlenadoManualActionPerformed
 
     /**
      * @param args the command line arguments
