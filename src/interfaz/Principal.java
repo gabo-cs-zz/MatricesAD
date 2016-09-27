@@ -275,7 +275,6 @@ public class Principal extends javax.swing.JFrame {
     private void cmdLlenadoManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLlenadoManualActionPerformed
         // TODO add your handling code here:
         int nf, nc, n, sw, res;
-        boolean aux = true;
         nf = tblTablaInicial.getRowCount();
         nc = tblTablaInicial.getColumnCount();
         for (int i = 0; i < nf; i++) {
@@ -294,7 +293,6 @@ public class Principal extends javax.swing.JFrame {
                             sw = 1;
                             i = nf;
                             j = nc;
-                            aux = false;
                             Helper.porDefectoTabla(tblTablaInicial);
                             Helper.porDefectoTabla(tblTablaResultado);
                         }
