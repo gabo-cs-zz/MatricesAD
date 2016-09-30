@@ -55,7 +55,8 @@ public class Principal extends javax.swing.JFrame {
         tblTablaInicial = new javax.swing.JTable();
         cmbOperacion = new javax.swing.JComboBox();
         jPanel5 = new javax.swing.JPanel();
-        txtResultado = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtResultado = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -154,7 +155,7 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 250, 180));
 
-        cmbOperacion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cant.NúmPares", "NúmPares", "Letra C", "DiagonalPrincipal", "Letra H" }));
+        cmbOperacion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cant.NúmPares", "NúmPares", "Letra C", "DiagonalPrincipal", "Letra H", "Recorrido Uno", "Recorrido Dos" }));
         cmbOperacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbOperacionActionPerformed(evt);
@@ -165,10 +166,13 @@ public class Principal extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Resultado"));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtResultado.setEditable(false);
-        jPanel5.add(txtResultado, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 25, 310, 40));
+        txtResultado.setColumns(20);
+        txtResultado.setRows(5);
+        jScrollPane3.setViewportView(txtResultado);
 
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 450, 350, 80));
+        jPanel5.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 310, 100));
+
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 450, 350, 130));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -178,10 +182,10 @@ public class Principal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(690, 593));
+        setSize(new java.awt.Dimension(690, 645));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -242,6 +246,12 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 4:
                 Helper.letraH(tblTablaInicial, tblTablaResultado);
+                break;
+            case 5:
+                txtResultado.setText(Helper.recorridoUno(tblTablaInicial));
+                break;
+            case 6:
+                txtResultado.setText(Helper.recorridoDos(tblTablaInicial));
                 break;
         }
         JButton botonesH[] = {cmdOperacion, cmdLimpiar};
@@ -360,10 +370,11 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable tblTablaInicial;
     private javax.swing.JTable tblTablaResultado;
     private javax.swing.JTextField txtNumeroColumnas;
     private javax.swing.JTextField txtNumeroFilas;
-    private javax.swing.JTextField txtResultado;
+    private javax.swing.JTextArea txtResultado;
     // End of variables declaration//GEN-END:variables
 }
